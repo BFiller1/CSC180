@@ -20,21 +20,20 @@ public class ParseAndFormatTest {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, 2014);
 		cal.set(Calendar.MONTH, 9);
-		cal.set(Calendar.DATE, 21);
+		cal.set(Calendar.DATE, 22);
 		Date d = cal.getTime();
 		String formatted = dates.format(d);
 		System.out.println(formatted);
 		
-		Assert.assertEquals("21 October 2014", formatted);
-		
-		cal.set(Calendar.DATE, 21);
+		Assert.assertEquals("22 October 2014", formatted);
+		cal.set(Calendar.DATE, 22);
 		d = cal.getTime();
 		
-		Assert.assertEquals("Oct 21 2014", formatted);
+		Assert.assertEquals("Oct 22 2014", formatted);
 		formatted = dates1.format(d);
 		System.out.println(formatted);
 		
-		Assert.assertEquals("October 21 14", formatted);
+		Assert.assertEquals("October 22 14", formatted);
 		formatted = dates2.format(d);
 		System.out.println(formatted);
 		
@@ -44,10 +43,9 @@ public class ParseAndFormatTest {
 	public void FormatTest(){
 		TableRowAuctionConverter trac = new TableRowAuctionConverter();
 		
-		String auctionItem = "1:Toy:fun:5";
-		Auction auction = trac.parse(auctionItem);
-		System.out.println(auction);
+//		String auctionItem = "1:Toy:fun:5";
+//		Auction auction = trac.parse(auctionItem);
+		System.out.println(trac.format(fromObject));
 		
 	}
-
 }
