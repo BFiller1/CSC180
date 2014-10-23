@@ -3,6 +3,7 @@ package labs.two;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 
 public class InMemoryAuctionService implements AuctionService{
@@ -30,7 +31,67 @@ public class InMemoryAuctionService implements AuctionService{
 
 		ArrayList<Auction> theSearch = new ArrayList<Auction>();
 		theSearch.addAll(CollectionUtils.filter(searches.values(), cp));
+		//for(Auction auction : searches.values()) {
+			//if(criteria.contains(auction.getName()) || criteria.contains(auction.getDescription())) {
+
+		Stack<Predicate<String>> predicateStack = new Stack<Predicate<String>>();
+		Stack<Predicate<String>> operatorStack = new Stack<Predicate<String>>();
+
+		Predicate<String> firstSearchString;
+		Predicate<String> secondSearchString;
 		
+//		if(criteria.contains(" AND ")){
+			for(String stringSplit: criteria.split(" ")){
+				//criteria = stringSplit;
+				if(stringSplit.equals("AND")){
+					
+					firstSearchString = predicateStack.pop();
+					secondSearchString = predicateStack.pop();
+					AndPredicate ap = new AndPredicate(firstSearchString, secondSearchString);
+					//operatorStack.add(stringSplit.trim());
+				}
+				else if(stringSplit.equals("OR")){
+					OrPredicate op = new OrPredicate(firstSearchString, secondSearchString);
+					if(operatorStack.peek().equals("AND")){
+						operatorStack.pop();
+					}
+					//operatorStack.add(stringSplit.trim());
+				}
+				else{
+					//predicateStack.add(stringSplit.trim());
+				}
+				//operatorStack.add(" AND ");
+				//predicateStack.add(andSplit);
+				//loop through index
+
+			}
+			System.out.println(predicateStack.toString());
+			System.out.println(operatorStack.toString());
+//		}
+
+//		else if(criteria.contains(" OR ")){
+//			for(String orSplit: criteria.split("(?<=OR)|(?=OR)")){
+//				criteria = orSplit;
+//				
+//				if(criteria.contains("OR")){
+//					if(operatorStack.peek().equals("AND")){
+//						operatorStack.pop();
+//					}
+//)
+//					operatorStack.add(orSplit.trim());
+//					
+//				}
+//				else{
+//					predicateStack.add(orSplit.trim());
+//				}
+//				
+//			}
+//			System.out.println(predicateStack.toString());
+//			System.out.println(operatorStack.toString());
+//		}
+		//Deque<String> stringStack = new ArrayDeque<String>();
+			//}
+		//}
 //		for(Auction auction : searches.values()) {
 //			if(criteria.contains(auction.getName()) || criteria.contains(auction.getDescription())) {
 //			}
