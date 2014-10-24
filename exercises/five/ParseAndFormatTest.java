@@ -43,9 +43,9 @@ public class ParseAndFormatTest {
 	public void FormatTest(){
 		TableRowAuctionConverter trac = new TableRowAuctionConverter();
 		
-//		String auctionItem = "1:Toy:fun:5";
+		Auction a = new Auction(5, "something", "Description of something", 7);
 //		Auction auction = trac.parse(auctionItem);
-		System.out.println(trac.format(fromObject));
+		System.out.printf(trac.format(a));
 		
 	}
 }

@@ -24,7 +24,7 @@ public class TableRowAuctionConverter implements Converter<Auction> {
 	@Override
 	public String format(Auction fromObject) {
 
-		return a.getId() + "%5s" + a.getName() + "%15s" + a.getDescription()  + "%50s" + a.getCurrentBid();
+		return a.getId() + "/%5s" + a.getName() + "%15s" + a.getDescription()  + "%50s" + a.getCurrentBid();
 		
 	}
 
