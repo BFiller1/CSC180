@@ -4,7 +4,6 @@ package exercises.five;
 
 public class TableRowAuctionConverter implements Converter<Auction> {
 //id name description bid(price) owner
-	TableFormat tf = new TableFormat("i n d p");
 
 //	Auction a = new Auction(5, "something", "Description of something", 7);
 	public TableRowAuctionConverter(){
@@ -13,11 +12,11 @@ public class TableRowAuctionConverter implements Converter<Auction> {
 	
 	@Override
 	public Auction parse(String fromString) {
-		try {
-			return tf.parse(fromString);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			return tf.parse(fromString);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		return null;
 	}
 
