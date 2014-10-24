@@ -4,28 +4,32 @@ package exercises.five;
 
 public class TableRowAuctionConverter implements Converter<Auction> {
 //id name description bid(price) owner
-//	TableFormat tf = new TableFormat("i" + "%5s" + "n" + "%15s" + "d"  + "%50s" + "p");
+	TableFormat tf = new TableFormat("i n d p");
 
-	Auction a = new Auction(5, "something", "Description of something", 7);
+//	Auction a = new Auction(5, "something", "Description of something", 7);
 	public TableRowAuctionConverter(){
 		
 	}
 	
 	@Override
 	public Auction parse(String fromString) {
-//		try {
-//			return tf.parse(fromString);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		try {
+			return tf.parse(fromString);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public String format(Auction fromObject) {
-
-		return a.getId() + "/%5s" + a.getName() + "%15s" + a.getDescription()  + "%50s" + a.getCurrentBid();
-		
+//		try {
+//			return tf.format(fromObject);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		System.out.println("__________________________________________");
+		String format = "| " + fromObject.getId() + "\t" + fromObject.getName() + "\t" + fromObject.getDescription() + "\t" + fromObject.getCurrentBid() + " |";
+		return format;
 	}
-
 }
