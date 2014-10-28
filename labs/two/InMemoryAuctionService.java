@@ -8,12 +8,12 @@ import java.util.Stack;
 
 public class InMemoryAuctionService implements AuctionService{
 	
-	Map<Integer, Auction> searches = new HashMap<Integer, Auction>();
+
 
 	//ArrayList<Auction> search = new ArrayList<Auction>();
-	Auction a = new Auction(1, "Computer", "A device used for computing", 10);
-	Auction a1 = new Auction(2, "Bag", "An item used for holding other items like a queue", 7);
-	Auction a2 = new Auction(3, "Television", "A device that can serve as a monitor or source of entertainment", 18);
+	Auction a = new Auction(1, "Computer", "a device used for computing", 10);
+	Auction a1 = new Auction(2, "Bag", "an item used for holding other items like a queue", 7);
+	Auction a2 = new Auction(3, "Television", "a device that can serve as a monitor or source of entertainment", 18);
 
 	public InMemoryAuctionService(){
 		searches.put(1, a);
@@ -27,95 +27,96 @@ public class InMemoryAuctionService implements AuctionService{
 	@Override
 	public Auction[] search(String criteria) {
 
-		ContainsPredicate cp = new ContainsPredicate(criteria);
-
+		Predicate<Auction> cp = null;
+		
 		ArrayList<Auction> theSearch = new ArrayList<Auction>();
-		theSearch.addAll(CollectionUtils.filter(searches.values(), cp));
 		//for(Auction auction : searches.values()) {
 			//if(criteria.contains(auction.getName()) || criteria.contains(auction.getDescription())) {
 
-		Stack<Predicate<String>> predicateStack = new Stack<Predicate<String>>();
-		Stack<Predicate<String>> operatorStack = new Stack<Predicate<String>>();
+		Stack<Predicate<Auction>> predicateStack = new Stack<Predicate<Auction>>();
+		Stack<String> operatorStack = new Stack<String>();
 
-		Predicate<String> firstSearchString;
-		Predicate<String> secondSearchString;
-		
-//		if(criteria.contains(" AND ")){
+		Predicate<Auction> firstSearchString;
+		Predicate<Auction> secondSearchString;
+
+		/*if(stringSplit.equals("NOT")){
+		 *		this method should check if a name or description does not contain
+		 * 		the search criteria and not will have to be checked first 
+		 * 		then and then or
+		 */
 			for(String stringSplit: criteria.split(" ")){
 				//criteria = stringSplit;
-				if(stringSplit.equals("AND")){
+				if(stringSplit.equalsIgnoreCase("AND")){
 					
-					firstSearchString = predicateStack.pop();
-					secondSearchString = predicateStack.pop();
-					AndPredicate ap = new AndPredicate(firstSearchString, secondSearchString);
-					//operatorStack.add(stringSplit.trim());
+					operatorStack.add(stringSplit.trim());
 				}
-				else if(stringSplit.equals("OR")){
-					OrPredicate op = new OrPredicate(firstSearchString, secondSearchString);
-					if(operatorStack.peek().equals("AND")){
+				else if(stringSplit.equalsIgnoreCase("OR")){
+					
+//					Pop off the top two from the predicate stack and the top one from the
+//					operator stack. Take the two predicates and use them to create an
+//					AndPredicate. Place it onto the predicate stack.
+//					Now that AND is off, place OR on the operator stack.
+					
+						operatorStack.add(stringSplit.trim());
+					while(operatorStack.peek().equalsIgnoreCase("AND") && !operatorStack.isEmpty()){
 						operatorStack.pop();
+						firstSearchString = predicateStack.pop();
+						secondSearchString = predicateStack.pop();
+						 cp = new AndPredicate<Auction>(firstSearchString, secondSearchString);
+						predicateStack.add(cp);
 					}
-					//operatorStack.add(stringSplit.trim());
 				}
 				else{
-					//predicateStack.add(stringSplit.trim());
+					predicateStack.add(cp = new ContainsPredicate(stringSplit.trim()));
+//					operatorStack.push(stringSplit);
 				}
+				
 				//operatorStack.add(" AND ");
 				//predicateStack.add(andSplit);
 				//loop through index
-
 			}
-			System.out.println(predicateStack.toString());
-			System.out.println(operatorStack.toString());
-//		}
+			while(!operatorStack.isEmpty()){
+				
+//				Step Five. Pop off the top two from the predicate stack and the top
+//				one from the operator stack. Take the two predicates and use them to
+//				create an AndPredicate. Place it onto the predicate stack.
+				
+				firstSearchString = predicateStack.pop();
+				secondSearchString = predicateStack.pop();
+				if(operatorStack.pop().equalsIgnoreCase("AND")){
+					 cp = new AndPredicate<Auction>(firstSearchString, secondSearchString);
+					 predicateStack.add(cp);
+				}
+				else{
+					cp = new OrPredicate<Auction>(firstSearchString, secondSearchString);
+					predicateStack.add(cp);
 
-//		else if(criteria.contains(" OR ")){
-//			for(String orSplit: criteria.split("(?<=OR)|(?=OR)")){
-//				criteria = orSplit;
-//				
-//				if(criteria.contains("OR")){
-//					if(operatorStack.peek().equals("AND")){
-//						operatorStack.pop();
-//					}
-//)
-//					operatorStack.add(orSplit.trim());
-//					
-//				}
-//				else{
-//					predicateStack.add(orSplit.trim());
-//				}
-//				
-//			}
+				}
+				//operatorStack.add(stringSplit.trim());
+//				op = new OrPredicate<Auction>(firstSearchString, secondSearchString);
+
+				if(operatorStack.isEmpty()){
+					predicateStack.pop();
+				}
+			}
+			//Checker the stacks
 //			System.out.println(predicateStack.toString());
 //			System.out.println(operatorStack.toString());
-//		}
-		//Deque<String> stringStack = new ArrayDeque<String>();
-			//}
-		//}
-//		for(Auction auction : searches.values()) {
-//			if(criteria.contains(auction.getName()) || criteria.contains(auction.getDescription())) {
-//			}
-//		}
-		
-//		if(auc.getName().equalsIgnoreCase(criteria)){
-//			temp.add(auc);
-//		}
-//	}
-//	return temp.toArray(new Auction[temp.size()]);
+
+		theSearch.addAll(CollectionUtils.filter(searches.values(), cp));
 		return theSearch.toArray(new Auction[theSearch.size()]);
 	}
 
 	@Override
 	public Auction bid(String username, int itemId) {
-		searches.get(searches.get(itemId));
-		for(Auction auc : searches.values()){
-			if(searches.get(itemId) != null){
-				auc.setCurrentBid(auc.getCurrentBid()+1);
-				auc.setOwner(username);
-				return auc;
+//		searches.get(itemId));
+		Auction a = searches.get(itemId);
+			if(a != null){
+				a.setCurrentBid(a.getCurrentBid()+1);
+				a.setOwner(username);
+//				return a;
 			}
-		}
-		return null;
+			return a;
 	}
 
 

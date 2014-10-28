@@ -46,6 +46,10 @@ public class EventLoop {
 					//give the next event to done queue
 					done.offer(eventNext);
 				}
+				/*
+				 * 
+				 * it could be the queue i may have to add a temp queue
+				 */
 //causes
 //				try{
 //					done.add(toDo.poll().next());

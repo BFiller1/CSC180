@@ -9,7 +9,7 @@ public interface Event {
 
 	//Scanner scan = new Scanner(System.in);
 
-	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 
 	void show();

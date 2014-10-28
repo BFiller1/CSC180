@@ -5,7 +5,6 @@ import java.util.Map;
 
 
 
-
 public class Auction{
 
 	private int id;
@@ -13,7 +12,6 @@ public class Auction{
 	private String description;
 	private String owner;
 	private String name;
-	private AuctionService auctionService;
 	
 	//add second constructor
 	//getproperty, set property, make modification toString()

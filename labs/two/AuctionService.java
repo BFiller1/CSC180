@@ -1,7 +1,12 @@
 package labs.two;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public interface AuctionService {
+
+	Map<Integer, Auction> searches = new HashMap<Integer, Auction>();
 
 	
 	Auction[] search(String criteria);

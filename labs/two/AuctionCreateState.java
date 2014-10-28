@@ -1,29 +1,32 @@
 package labs.two;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class AuctionCreateState implements Event {
 //this will use the create statement
+	Random rand = new Random();
 	String name;
 	String description;
 	int price = 1;
-	int id = 4;
-	String person;
+	String productName;
 	AuctionService as;
-	InMemoryAuctionService imas = new InMemoryAuctionService();
-	Auction newItem = new Auction(id, name, description, price);
+//	int id = as.searches.size()+1;
+//	int id = 4;
+
+	AuctionCreateState(String name, AuctionService as){
+		this.name = name;
+		this.as = as;
+
+	}
+	
 	@Override
 	public void show() {
-		System.out.println("Type in the required information for a new auction item.");
-		try {
-			br.readLine();
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
+		System.out.println(name + ", type in the required information for a new auction item." + "\n");
+
 		System.out.println("Name of product:");
 		try {
-			name = br.readLine();
+			productName = br.readLine();
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -37,18 +40,21 @@ public class AuctionCreateState implements Event {
 		}
 		System.out.println("Price of product:");
 		try {
-			price = br.read();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String stringToInt = br.readLine();
+			price = Integer.parseInt(stringToInt);
+			 
+		} catch (Exception e) {
+			System.out.println("The input wasn't a number or was out of bounds try again.");
 		}
-		id++;
-		imas.create(newItem);
+		int id = as.searches.size()+1;
+		Auction a = new Auction(id, productName, description, price);
+		as.create(a);
+		System.out.println();
+		System.out.println(productName + " has been added to the auction." + "\n");
 	}
 
 	@Override
 	public Event next() {
-		return new UserHomeState(as, person);
+		return new UserHomeState(as, name);
 	}
-
 }

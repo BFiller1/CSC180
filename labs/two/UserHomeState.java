@@ -8,6 +8,7 @@ public class UserHomeState implements Event{
 
 	String name;
 	AuctionService as;
+	
 	public UserHomeState(AuctionService as, String name){
 		this.name = name;
 		this.as = as;
@@ -29,11 +30,11 @@ public class UserHomeState implements Event{
 			e.printStackTrace();
 		}
 		//alters state
-		if(input.equals(null) || input.equals("")){
+		if(input == null || input.equals("")){
 			return new DefaultState(as);
 		}
 		if(input.equalsIgnoreCase("add")){
-			return new AuctionCreateState();
+			return new AuctionCreateState(name, as);
 		}
 		else{
 			

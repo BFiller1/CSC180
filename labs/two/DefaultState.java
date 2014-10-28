@@ -1,9 +1,6 @@
 package labs.two;
 
-
 import java.io.IOException;
-
-
 
 public class DefaultState implements Event{
 
@@ -11,7 +8,6 @@ public class DefaultState implements Event{
 	public DefaultState(AuctionService as){
 		this.as = as;
 	}
-	
 	
 	@Override
 	public void show() {
