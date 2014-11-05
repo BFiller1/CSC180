@@ -2,7 +2,7 @@ package exercises.seven;
 
 public class Padding {
 
-	char endOfText = 0x1e;
+	char asciiChar = 0x1e;
 	public String pad(Object obj, int len){
 
 		String str = obj.toString();
@@ -11,7 +11,7 @@ public class Padding {
 			StringBuilder sb = new StringBuilder(str);
 			if(len > sb.length()){
 				while(len > sb.length()){
-					sb.append(endOfText);
+					sb.append(asciiChar);
 				}
 				str = sb.toString();
 //				System.out.println(str);
