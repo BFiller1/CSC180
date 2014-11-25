@@ -19,7 +19,7 @@ public class EventLoop {
 	
 	public EventLoop(){
 		toDo.add(new DefaultState(as));
-		toDo.add(new DefaultState(as));
+//		toDo.add(new DefaultState(as));
 	}
 	
 	
@@ -27,7 +27,7 @@ public class EventLoop {
 		
 		while(true){
 			if(toDo.isEmpty() == true){
-				toDo.add(new DefaultState(as));
+//				toDo.add(new DefaultState(as));
 
 				toDo.addAll(done);
 				//toDo.add(new DefaultState(as));

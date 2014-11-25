@@ -16,7 +16,7 @@ public class Server {
 	public static void main(String[] args) {
 		
 		try(
-				ServerSocket server = new ServerSocket(10000);
+				ServerSocket server = new ServerSocket(10_000);
 				Socket clientsocket = server.accept();
 					PrintWriter out = new PrintWriter(clientsocket.getOutputStream(), true);
 					BufferedReader in = new BufferedReader(new InputStreamReader(clientsocket.getInputStream()));
@@ -34,7 +34,7 @@ public class Server {
 				Matcher search_match = SEARCH.matcher(command);
 				
 				if(delete_match.find()){
-					long id = Long.parseLong(delete_match.group(1));
+					long id = Long.parseLong(delete_match.group(2));
 					AuctionService as = new InMemoryAuctionService();
 					as.delete(id);
 				}
@@ -44,11 +44,9 @@ public class Server {
 //					as.update(id, a);
 				}
 				else if(search_match.find()){
-					long id = Long.parseLong(search_match.group(1));
+					long id = Long.parseLong(search_match.group(2));
 					AuctionService as = new InMemoryAuctionService();
-					
 				}
-					
 				try {
 					clientsocket.close();
 					oos.flush();

@@ -16,12 +16,11 @@ public class UserHomeState implements Event{
 
 	@Override
 	public void show() {
-		System.out.println(name + ", would you like to search for an item, create an item, or edit an existing item?  (Hit Enter to logout, Type ADD to add a new item to the auction)");
+		System.out.println(name + ", would you like to search for an item, create an item, or logout?  (Hit Enter to logout, Type ADD to add a new item to the auction)");
 		System.out.println("Type in the corresponding number to select that entry.");
 		System.out.println("1) search for an item.");
 		System.out.println("2) create an item");
-		System.out.println("3) edit/delete an existing item");
-
+		System.out.println("3) logout");
 	}
 
 	@Override
@@ -34,9 +33,9 @@ public class UserHomeState implements Event{
 			e.printStackTrace();
 		}
 		//alters state
-		if(input == null || input.equals("")){
-			return new DefaultState(as);
-		}
+//		if(input == null || input.equals("")){
+//			return new DefaultState(as);
+//		}
 		if(input.equals("1")){
 			System.out.println("What would you like to search for");
 			try {

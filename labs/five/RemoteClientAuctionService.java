@@ -33,16 +33,15 @@ it will send a response back through the Socket.
 	
 	public static void main(String[] args) throws IOException {
 //		AuctionService as = new AuctionService();
+
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String name = br.readLine();
 		try(
-		Socket client = new Socket("client: " + name, 10000);
+		Socket client = new Socket("localhost", 10000);
 		BufferedReader file = new BufferedReader(new InputStreamReader(client.getInputStream()));
 		PrintWriter pw = new PrintWriter(new OutputStreamWriter(client.getOutputStream()))){
 			String userInput = br.readLine();
 			pw.write(userInput);
 			client.close();
-
 			
 		} catch (IOException e) {
 			e.printStackTrace();

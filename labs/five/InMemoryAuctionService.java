@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Stack;
@@ -29,12 +27,14 @@ public class InMemoryAuctionService implements AuctionService{
 		searches.put(1l, a);
 		searches.put(2l, a1);
 		searches.put(3l, a2);
+		
 //		search.add(a);
 //		search.add(a1);
 //		search.add(a2);
 	}
 	
 	public void FileReading(String filename){
+		RemoteClientAuctionService client = new RemoteClientAuctionService();
 		String name = "";
 		String id;
 		String date = null;
@@ -109,7 +109,6 @@ public class InMemoryAuctionService implements AuctionService{
 			}
 		}
 	
-
 	@Override
 	public Auction[] search(String criteria) {
 
